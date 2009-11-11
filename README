@@ -1,0 +1,70 @@
+sfJSLibManagerPlugin
+==========================
+
+A simple plugin to manage the inclusion of a javascript library's relevant js &
+css files via a single call to a static method
+
+    sfJSLibManager::addLib('my_js_lib');
+
+
+Installation
+------------
+
+To install the plugin for a symfony project, the usual process is to use the
+symfony command line:
+
+    php symfony plugin:install sfJSLibManagerPlugin
+
+If the installation of either package fails then you can manually download the
+tgz file from
+
+    http://plugins.symfony-project.org/get/sfJSLibManagerPlugin/sfJSLibManagerPlugin-1.0.0.tgz
+
+and then ask symfony to install the downloaded file
+
+    php symfony plugin:install sfJSLibManagerPlugin-1.0.0.tgz
+
+Enable the plugin if necessary by editing config/ProjectConfiguration.class.php:
+
+    $this->enablePlugins('sfJSLibManagerPlugin');
+
+
+Usage
+-----
+
+The plugin looks for a library's config which should be defined in settings.yml.
+This specifies the location of the js & css files for a particular javascript
+library and should look something like the following:
+
+all:
+  .settings:
+    js_lib_jquery_ui:
+      dependencies: jquery    # optional list of dependencies
+      web_dir:    /           # where to find the js & css directories
+      js_files:   jquery-ui-1.7.2.custom.min.js  # single file or array of files
+      css_files:  jquery-ui-1.7.2.custom.css     # single file or array of files
+
+The addLib() method will return true on success and false on failure (because no
+settings were foudn for the requested library for example)
+
+Settings
+--------
+
+The settings should appear under a section labelled as the name of the library
+prefixed by js_lib_, and then name of the library is all that get's passed to
+the addLib() method. Eg:
+
+    sfJSLibManager::addLib('jquery_ui');
+
+dependencies - if dependencies are listed here then the plugin will attempt to
+load them before it loads the requested library. Failure to find config for a
+dependency will result in the library not being loaded, and the addLib() method
+will return false
+
+web_dir - tells the manager where to find the asset dirs (js & css) and it's
+relative to /web
+
+js_files - optional setting which lists one or more javascript files to include
+
+css_files - optional setting which lists one or more css files to include
+
