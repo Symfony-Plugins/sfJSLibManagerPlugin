@@ -149,6 +149,11 @@ class sfJSLibManager {
    */
   private static function addAssets($lib_config)
   {
+    if (!sfContext::hasInstance())
+    {
+      return;
+    }
+
     $response = sfContext::getInstance()->getResponse();
 
     /**
