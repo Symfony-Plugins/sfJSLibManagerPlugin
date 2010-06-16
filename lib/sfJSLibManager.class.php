@@ -182,7 +182,8 @@ class sfJSLibManager {
 
       foreach ($lib_config[$setting] as $asset_file)
       {
-        $response->$method($lib_config['web_dir'] . '/' . $asset_type . '/' . $asset_file);
+        $response->$method($lib_config['web_dir'] . '/' . $asset_type . '/' . $asset_file,
+                !empty($lib_config['position']) ? $lib_config['position'] : '');
       }
     }
 
